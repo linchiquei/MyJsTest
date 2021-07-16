@@ -1,0 +1,108 @@
+js 分為建構與執行
+
+let var const
+
+const only need have value one times
+let need have value
+var will not nessacry
+
+const and let limit in block
+var limit in function
+
+all function have return value ? yes, value or undefined
+js need to write return
+
+founstion a(n) n=parameter
+
+a(3) 3=argument js can print argument
+ 
+ruby not nesscary to write return
+
+founstion b(x,y,n)
+
+b(1,2) ans: 1,2,undefined
+
+== user null
+=== user undefined
+
+Q:
+時機 == or === ??
+時機 user or undefined ??
+
+js 少點判斷！！！！ 能確定寫的就先寫！！！
+
+js function is object too 
+
+b = funstion a{
+console.log("a")
+}
+
+console.log(b) ans:[function,a]
+
+var x = function(n){ console.log("hi") }
+x ans: 什麼都沒
+x() ans: hi 解讀成呼叫x指向的方法
+
+const a = function(s){} anonymous funtion
+
+js 大師 kyle sim..
+
+function become object need to 先宣告
+
+function 被當物件時,也會有變數提升的問題
+yy()
+
+const yy = function y(){
+}
+
+var yy = function y(){}
+
+ans: errpr tdz
+
+var => undefined
+const, let => tdz
+
+arrow function
+
+const a = ()=>{}
+a()
+
+```
+// function cTof(c){
+//     f = c * 1.8 + 32;
+//      return f;
+// }
+// console.log(cTof(34.0))
+
+const t = (c)=>{
+   var f = c * 1.8 + 32;
+   console.log(f)
+}
+
+t(30)
+```
+
+var a = 1
+function B(){
+    console.log(a)
+    var a=2
+}
+
+B() ans: undefined 變數提升
+
+var a = 1 宣告後指派
+b=2 2指配給b變數 沒有宣告的b 直接被變全域變數
+
+js 變數範圍
+啥都沒寫 = 全域 非常糟糕！
+var function
+const let {}
+
+var a = 1
+function hi(){
+    a = 2
+}
+hi()
+console.log(a) //方法hi會去找外部a 把a值變成a
+
+var 少用！最好不用！！
