@@ -52,6 +52,41 @@
 
 // setTimeout(a, 2000);
 
-setTimeout(function(){
-    console.log('hello world');
-}, 2000);
+// setTimeout(function(){
+//     console.log('hello world');
+// }, 2000);
+
+function printStars2(num){
+    // let star =''
+    // let space = ''
+    // for(i = 1 ; i <= num ; i++ ){
+    //     space = ' '.repeat(num-i)
+    //     star = "*".repeat(i)
+    //     console.log(space + star)
+    // }
+
+
+}
+
+// function printStars2(num){
+//     let star = ''
+//     let space = ''
+//     for(i = 1; i <= num; i++){
+//         space = " ".repeat(num-i)
+//         star = "*".repeat(i)
+//         console.log(space + star)
+//     }
+// }
+
+
+printStars2(100)
+
+function printStars2(num){
+    let star =''
+    let space =''
+    for (let i = 1; i <= num; i++) {
+        space = ' '.repeat(num-i)
+        star = '*'.repeat(2*i-1)
+        console.log(space + star)
+    }
+}

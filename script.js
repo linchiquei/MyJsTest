@@ -1,19 +1,43 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const h = document.querySelector("#hi");
+document.addEventListener("DOMContentLoaded", loadEnd);
 
-    // setTimeout(() => {
-    //     h.innerHTML = "456";
-    // }, 3000);
+function loadEnd(){
+    var timer; //這個應該不能放入click中,同理！
+    var sec = 0; //這個應該不能放入click事件中,會變成每點一次都宣告一個？
+    var h =  document.querySelector("#timer");
+    document.querySelector("#start-btn").addEventListener('click', ()=>{
+        
+        if(sec != 0){
+            clearInterval(timer);
+            sec=0;
+            h.innerHTML = sec;
+        }
+        else {
+            timer = setInterval(()=>{
+                sec= sec + 1;
+                h.innerHTML = sec;
+            },1000);
+        }
+    });
+}
 
-    const btn = document.querySelector("#btn");
-    btn.addEventListener("click", ()=>{
-        // var str = btn.innerHTML;
-        // if(str === "go"){
-        //     btn.innerHTML = "bye";
-        // }
-        // else {
-        //     btn.innerHTML = "go";
-        // }
-        h.innerText = "456"
-    })
-});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
