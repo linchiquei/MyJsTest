@@ -1,0 +1,130 @@
+重新認識js一系列文章
+
+剛剛說過，由於 JavaScript 是個「弱型別」的程式語言，嚴格來說，變數本身其實不帶有資料型別的資訊，其中的「值」或「物件」才有。 所以說在執行時期透過變數內容來參考至物件或值，才會得知此變數有什麼操作的方法。
+
+///////////////////////////////////////////
+
+(Primitives)基本型別內的資料，會是以純值的形式存在 ( string、number、boolean、null、undefined ) 除了上述幾種之外，都可以歸類至物件型別 (Object)。物件型別指的是可能由零或多種不同型別 (包括純值與物件) 所組合成的物件。(object、array)
+
+Primitives pass by value
+Object pass by reference
+Object in function change object value is call " pass by sharing"
+
+var coin1 = { value: 10 };
+
+function changeValue(obj) {
+  obj = { value: 123 };
+}
+
+changeValue(coin1);
+console.log(coin1);   // 此時 coin1 仍是 { value: 10 }
+
+///////////////////////////////////////////
+
+typeof  true;         // 'boolean'
+typeof  'Kuro';       // 'string'
+typeof  123;          // 'number'
+typeof  NaN;          // 'number'
+typeof  { };          // 'object'
+typeof  [ ];          // 'object'
+
+// 下面兩個要特別注意，之後的篇幅會介紹到
+typeof window.alert;  // 'function'
+typeof null;          // 'object'
+
+透過 typeof 運算子回傳的東西都是「字串」。
+當我們透過 typeof 去檢查一個「函式 (function) 」的時候，
+雖然你會得到 "function" 的結果，讓你以為 function 也是 JavaScript 定義的一種型別，但實際上它仍屬於 Object 的一種，你可以把它想像成是一種可以被呼叫 (be invoked) 的特殊物件。
+
+///////////////////////////////////////////
+
+string
+JavaScript 沒有 char (字元) 的概念，只有字串。
+字串會用 ' ' (單引號) 或 " " (雙引號) 
+單引號與雙引號的使用在 JavaScript 沒有什麼差異，依習慣使用即可。
+
+number
+JavaScript 只有一種數值的型別，就是 number，不管整數或帶有小數點的數字都是
+
+Infinity (無限大) 、 -Infinity (負無限大) ，以及 NaN (不是數值，Not a Number)。NaN 與任何數字作數學運算，結果都是 NaN。 也就是說， NaN 並不等於任何的數字，甚至是自己。
+既然這樣，那要怎麼檢查一個變數是否為 NaN 呢？ 這個時候可以透過 isNaN(value) 來幫助我們判斷。
+
+
+undefined 代表的是「(此變數) 還沒有給值，所以不知道是什麼」
+null 代表的是「(此變數可能曾經有值，可能沒有值) 現在沒有值」
+
+我想這點在透過 Number() 強制為兩者轉型的時候多少可以看出點什麼：
+Number( null );         // 0
+Number( undefined );    // NaN
+
+object
+判斷屬性是否存在
+想要判斷屬性是否存在，最簡單的方式就是檢查該屬性是不是 undefined。
+var obj = {
+  name: 'Object'
+};
+
+// 透過 in 檢查屬性
+console.log( 'name' in obj );     // true
+console.log( 'value' in obj );    // false
+
+// 透過 hasOwnProperty() 方法檢查
+obj.hasOwnProperty('name');       // true
+obj.hasOwnProperty('value');      // false
+
+array
+而陣列的長度可以由 ARRAY.length 來取得，而且 length 這個屬性的值是可以被覆寫的。
+var a = ["apple", "boy", "cat"];
+a.length;         // 3
+
+a.length = 1;
+console.log(a);   // ["apple"]
+
+a.length = 3;
+console.log(a);   // ["apple", undefined, undefined]
+
+陣列的長度隨時可以增加或減少，就算指定索引元素時也不一定要連續指定：
+var array = ['a', 'b', 'c'];
+array.length;         // 3
+
+array[7] = 'z';
+console.log(array);   // ["a", "b", "c", undefined, undefined, undefined, undefined, "z"]
+
+判斷某變數是否為一個陣列而非物件的時候，該怎麼處理呢？Array 定義了 isArray() 方法
+Array.isArray([]);            // true
+Array.isArray([1]);           // true
+Array.isArray(new Array());   // true
+
+///////////////////////////////////////////
+
+運算式 (Expression) 與 運算子(Operator)
+而運算式最大的特性，就是它會產生一個「值」。
+
+算術運算子（加法）（減法）
+基本上會以轉型成數字在做計算
+
+///////////////////////////////////////////
+
+123 + undefined     // NaN
+123 + null          // 123
+
+100 - "50"        // 50
+100 - "abc"       // NaN
+
+// false 經過 Number() 轉型成數字後，會變成 0
+100 - false       // 100
+// true 經過 Number() 轉型成數字後，會變成 1
+100 - true        // 99
+
+100 - undefined   // NaN
+100 - null        // 100
+
+但有例外！！其中一方為字串,則會變成轉型成字串去做運算
+
+///////////////////////////////////////////
+
+100 + "100"      // "100100"
+"ABC" + "XYZ"    // "ABCXYZ"
+10 + 'abc'          // "10abc"
+true + 'abc'        // "trueabc"
+100 + {}            // "100[object Object]"

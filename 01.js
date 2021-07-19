@@ -1,12 +1,14 @@
-// function displayName(firstName, lastName = "Kitty") {
-//     if(firstName === undefined || firstName === "")
-//     return console.log("請輸入名稱") 
-//     else {
-//         console.log(`${firstName} ${lastName}`)
-//     }
-//   }
+function displayName(firstName, lastName = "Kitty") {
+    if(firstName === undefined || firstName === "")
+    return console.log("請輸入名稱") 
+    else {
+        console.log(`${firstName} ${lastName}`)
+    }
+  }
 
-// 
+  displayName("")
+  displayName()
+
 
 
 // function cTof(c){
@@ -176,8 +178,8 @@
 // A()
 // console.log(b)
 
-function A(a,b){
-    console.log(a,b)
-}
+// function A(a,b){
+//     console.log(a,b)
+// }
 
-A(1,2,3)
+// A(1,2,3)
