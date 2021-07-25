@@ -108,21 +108,22 @@
 
 // console.log(smallPower)
 
-const lists = [2, 4, 1, 8, 7, 3, 5]
+// const lists = [2, 4, 1, 8, 7, 3, 5]
 
-// 實作...
+// // 實作...
 
-const result = lists.filter(x=>x>4)
-console.log(result)  // 印出 [ 8, 7, 5 ]
+// const result = lists.filter(greaterThan(4))
+// console.log(result)  // 印出 [ 8, 7, 5 ]
 
-function greaterThan(n){
-    return function(x){ return x > n }
-}
+// function greaterThan(n){
+//     return function(x){ return x > n }
+// }
 
-function filterList(list,n){
-    return list.filter(x=>x>n)
-}
+// function filterList(list,n){
+//     return list.filter(x=>x>n)
+// }
 
-console.log(filterList(lists, 4)) 
+// console.log(filterList(lists, 4)) 
+
 
 
