@@ -1,19 +1,22 @@
 //construct
 //class -> new -> instance （實體/實例）
 class Human{
-    constructor(){
-    }
+    // constructor(){
+    // }
 }
 
 class Hero extends Human { //繼承
 
     constructor(name,action){
-        super()
+        //super()
         this.name = name,
         this.action = action
     }
 
+    
+
     attack(){
+        
         console.log('%s 使用絕招 %s', this.name, this.action)
     }
 
