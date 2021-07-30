@@ -57,17 +57,13 @@ document.addEventListener("DOMContentLoaded", () => {
       const clearBtn = document.querySelector('#clear'); 
       clearBtn.addEventListener('click',()=>{
           const allitem = itemCount();
+          console.log(allitem);
+
           allitem.forEach((item)=>{
-              item.remove();
-          })
-          updateState();
+            item.remove();
+        })
+        updateState();
+
       })
   }
 
-  var itemCount = ()=>{
-      return document.querySelectorAll('.list li');
-  }
-
-  const itemLength = ()=>{
-      return itemCount().length;
-  }

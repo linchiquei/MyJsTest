@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .btn,
+        .all-btn{
+            background-color: aquamarine;
+            padding: 20px;
+        }
+        .p-btn{
+            background-color: rgb(231, 196, 240);
+            padding: 20px;
+        }
+        p{
+            background-color: yellowgreen;
+            
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <button class="btn">button</button>
+        <button class="all-btn">add</button>
+    </div>
+
+    <div class="product">
+        <button class="p-btn" data-id="apple">apple</button>
+        <button class="p-btn" data-id="orange">orange</button>
+        <button class="p-btn" data-id="banana">banana</button>
+    </div>
+
+    <div class="list"></div>
+</body>
+<script>
+    const p = document.querySelector('.product');
+    const c = document.querySelector('.list');
+    const btn = document.querySelector('.btn');
+    const allbtn = document.querySelector('.all-btn');
+
+    c.addEventListener('click',(e)=>{
+        console.log(e.target);
+
+    });
+
+    p.addEventListener('click', (e)=>{
+        const id = e.target.dataset.id;
+        if(id){
+            var p = document.createElement('p');
+            p.textContent = id;
+            p.className = 'product-item';
+            c.appendChild(p);
+        }
+    });
+
+    allbtn.addEventListener('click',()=>{
+        add();
+    });
+
+    btn.addEventListener('click',()=>{
+        console.log(c.childNodes);
+        while(c.childNodes){
+            c.removeChild(c.lastElementChild);
+        }
+    });
+
+    function add(){
+        for (var i = 0; i < 9; i++) {
+            var p = document.createElement('p');
+            p.textContent = '234';
+            c.appendChild(p);
+        }
+    }
+</script>
+</html>
