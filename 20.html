@@ -1,278 +1,296 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scanNume=1">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scanNume=1" />
 
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0"
+      crossorigin="anonymous"
+    />
     <title>Hello, world!</title>
     <style>
-        .container {
-            width: 25%;
-            min-width: 375px;
-        }
-        
-        .dark {
-            background-color: #888;
-        }
-        
-        .dark:active {
-            background-color: rgb(97, 97, 97);
-        }
-        
-        .warning {
-            background-color: rgb(255, 181, 90);
-            border-right: var(--data);
-        }
-        
-        .warning:active {
-            background-color: rgb(212, 151, 76);
-        }
-        
-        .secondary {
-            background-color: #bbb;
-        }
-        
-        .secondary:active {
-            background-color: rgb(152, 152, 152);
-        }
-        
-        #ans {
-            background-color: rgb(92, 89, 89);
-            font-size: 4rem;
-            border-top: var(--data);
-            border-left: var(--data);
-            border-right: var(--data);
-            border-top-left-radius: 10px;
-            border-top-right-radius: 10px;
-        }
-        
-        .item {
-            font-size: 1.5rem;
-            --data: 1px solid black;
-            border-top: var(--data);
-            border-left: var(--data);
-        }
-        
-        .bottom {
-            border-bottom: var(--data);
-        }
-        
-        #E {
-            border-bottom-right-radius: 10px;
-        }
-        
-        .zero {
-            border-bottom-left-radius: 10px;
-        }
-        
-        .dot-list {
-            font-size: 1rem;
-            top: 5px;
-            left: 5px;
-        }
-        
-        .dot-list span:first-child {
-            color: rgb(255, 76, 68);
-        }
-        
-        .dot-list span:nth-child(2n) {
-            color: rgb(255, 190, 0);
-        }
-        
-        .dot-list span:last-child {
-            color: rgb(0, 209, 43)
-        }
+      .container {
+        width: 25%;
+        min-width: 375px;
+      }
+
+      .dark {
+        background-color: #888;
+      }
+
+      .dark:active {
+        background-color: rgb(97, 97, 97);
+      }
+
+      .warning {
+        background-color: rgb(255, 181, 90);
+        border-right: var(--data);
+      }
+
+      .warning:active {
+        background-color: rgb(212, 151, 76);
+      }
+
+      .secondary {
+        background-color: #bbb;
+      }
+
+      .secondary:active {
+        background-color: rgb(152, 152, 152);
+      }
+
+      #ans {
+        background-color: rgb(92, 89, 89);
+        border-top: var(--data);
+        border-left: var(--data);
+        border-right: var(--data);
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        height: 96px;
+        display: flex;
+        align-items: flex-end;
+      }
+
+      #box{
+        font-size: 64px;
+        flex-grow: 1;
+      }
+
+      .item {
+        font-size: 1.5rem;
+        --data: 1px solid black;
+        border-top: var(--data);
+        border-left: var(--data);
+      }
+
+      .bottom {
+        border-bottom: var(--data);
+      }
+
+      #E {
+        border-bottom-right-radius: 10px;
+      }
+
+      .zero {
+        border-bottom-left-radius: 10px;
+      }
+
+      .dot-list {
+        font-size: 1rem;
+        top: 5px;
+        left: 5px;
+      }
+
+      .dot-list span:first-child {
+        color: rgb(255, 76, 68);
+      }
+
+      .dot-list span:nth-child(2n) {
+        color: rgb(255, 190, 0);
+      }
+
+      .dot-list span:last-child {
+        color: rgb(0, 209, 43);
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <div class="container text-white">
-        <div class="row row-cols-1 position-relative">
-            <div class="pt-4 text-end" id="ans"></div>
-            <div class="dot-list position-absolute">
-                <span>●</span>
-                <span>●</span>
-                <span>●</span>
-                <span class="hidden"></span>
-            </div>
+      <div class="row row-cols-1 position-relative">
+        <div class="text-end" id="ans">
+          <span id="box"></span>
         </div>
-        <div class="row row-cols-4 flex-wrap text-center">
-            <div class="item dark p-4" id="AC">AC</div>
-            <div class="item dark p-4" id="P">+/-</div>
-            <div class="item dark p-4" id="R">%</div>
-            <div class="item warning p-4" id="D">÷</div>
-            <div class="item secondary p-4" id="7">7</div>
-            <div class="item secondary p-4" id="8">8</div>
-            <div class="item secondary p-4" id="9">9</div>
-            <div class="item warning p-4" id="M">✕</div>
-            <div class="item secondary p-4" id="4">4</div>
-            <div class="item secondary p-4" id="5">5</div>
-            <div class="item secondary p-4" id="6">6</div>
-            <div class="item warning p-4" id="S">-</div>
-            <div class="item secondary p-4" id="1">1</div>
-            <div class="item secondary p-4" id="2">2</div>
-            <div class="item secondary p-4" id="3">3</div>
-            <div class="item warning p-4" id="A">+</div>
-            <div class="zero bottom item secondary p-4 w-50" id="0">0</div>
-            <div class="bottom item secondary p-4" id="dot">.</div>
-            <div class="bottom item warning p-4" id="E">=</div>
+        <div class="dot-list position-absolute">
+          <span>●</span>
+          <span>●</span>
+          <span>●</span>
         </div>
+      </div>
+      <div class="row row-cols-4 flex-wrap text-center">
+        <div class="item dark p-4" id="AC">AC</div>
+        <div class="item dark p-4" id="P">+/-</div>
+        <div class="item dark p-4" id="R">%</div>
+        <div class="item warning p-4" id="D">÷</div>
+        <div class="item secondary p-4" id="7">7</div>
+        <div class="item secondary p-4" id="8">8</div>
+        <div class="item secondary p-4" id="9">9</div>
+        <div class="item warning p-4" id="M">✕</div>
+        <div class="item secondary p-4" id="4">4</div>
+        <div class="item secondary p-4" id="5">5</div>
+        <div class="item secondary p-4" id="6">6</div>
+        <div class="item warning p-4" id="S">-</div>
+        <div class="item secondary p-4" id="1">1</div>
+        <div class="item secondary p-4" id="2">2</div>
+        <div class="item secondary p-4" id="3">3</div>
+        <div class="item warning p-4" id="A">+</div>
+        <div class="zero bottom item secondary p-4 w-50" id="0">0</div>
+        <div class="bottom item secondary p-4" id="dot">.</div>
+        <div class="bottom item warning p-4" id="E">=</div>
+      </div>
     </div>
-</body>
-<script>
-    const ans = document.querySelector('#ans');
-    ans.textContent = '0';
-    const row = document.querySelector('.container');
-    const hidden = document.querySelector('.hidden');
+  </body>
+  <script>
+        const ans = document.querySelector("#box");
+        ans.textContent = "0";
+        const defaultfontsize = window.getComputedStyle(ans, null).getPropertyValue('font-size');
+        const row = document.querySelector(".container");
+        const hidden = document.querySelector(".hidden");
 
-    row.addEventListener('click', (e) => {
-        docanNumculate(e);
-    });
+        row.addEventListener("click", (e) => {
+          docanNumculate(e);
+        });
 
-    let calAction = null;
-    let preID = null;
-    let previousNum = [];
-    let nowNum = 0;
-    let preNum = 0;
-    let answer = 0;
-    let lockNum = false;
-    let tempTotal = 0;
+        let calAction = null;
+        let preID = null;
+        let previousNum = [];
+        let nowNum = 0;
+        let preNum = 0;
+        let answer = 0;
+        let lockNum = false;
+        let tempTotal = 0;
 
-    const mathOfCal = {
-        "A": function(x, y) {
-            return (x + y)
-        },
-        "S": function(x, y) {
-            return (x - y)
-        },
-        "M": function(x, y) {
-            return strip(x * y)
-        },
-        "D": function(x, y) {
-            return strip(x / y)
+        let style;
+        let originFontSize;
+        const maxDisplayCharInLine = 6;
+        let fontsize;
+
+        function updateFontSize(){
+            originFontSize = parseFloat(defaultfontsize) ?? 64; 
+            fontSize = Math.min(originFontSize, originFontSize / (ans.textContent.length / maxDisplayCharInLine));
+            ans.style.fontSize = fontSize + "px";
         }
-    }
 
-    function strip(num, precision = 12) {
-        return parseFloat(num.toPrecision(12));
-    }
+        const mathOfCal = {
+          A: function (x, y) {
+            return x + y;
+          },
+          S: function (x, y) {
+            return x - y;
+          },
+          M: function (x, y) {
+            return strip(x * y);
+          },
+          D: function (x, y) {
+            return strip(x / y);
+          },
+        };
 
-    function checkHasDot() {
-        return /[\.]/.test(ans.textContent);
-    }
+        function strip(num, precision = 12) {
+          return parseFloat(num.toPrecision(12));
+        }
 
-    function cheackHasSameAction() {
-        return /['A','E','M','R','D']/.test(preID);
-    }
+        function checkHasDot() {
+          return /[\.]/.test(ans.textContent);
+        }
 
-    function reset() {
-        calAction = null;
-        preID = null;
-        previousNum = [];
-        nowNum = 0;
-        preNum = 0;
-        answer = 0;
-        lockNum = false;
-        tempTotal = 0;
-        ans.textContent = 0;
-    }
+        function cheackHasSameAction() {
+          return /['A','E','M','R','D']/.test(preID);
+        }
 
-    function docanNumculate(e) {
+        function reset() {
+          calAction = null;
+          preID = null;
+          previousNum = [];
+          nowNum = 0;
+          preNum = 0;
+          answer = 0;
+          lockNum = false;
+          tempTotal = 0;
+        }
 
-        if (!isNaN(e.target.id) || e.target.id == "dot") {
+        function checkCanPushNum() {
+          qans = !isNaN(preID) || preID == "P" || preID == "R";
+          console.log(qans);
+          return qans;
+        }
+
+        function docanNumculate(e) {
+          if (!isNaN(e.target.id) || e.target.id == "dot") {
             if (!lockNum) {
-                if (e.target.id == "dot") {
-                    if (!checkHasDot())
-                        ans.textContent += '.';
-                } else if (!isNaN(e.target.id)) {
-                    if (ans.textContent.length == 1 && ans.textContent == '0') {
-                        ans.textContent = '';
-                    }
-                    ans.textContent += e.target.id;
+              if (e.target.id == "dot") {
+                if (!checkHasDot()) ans.textContent += ".";
+              } else if (!isNaN(e.target.id)) {
+                if (ans.textContent.length == 1 && ans.textContent == "0") {
+                  ans.textContent = "";
                 }
+                ans.textContent += e.target.id;
+              }
             } else {
-                ans.textContent = e.target.id;
-                lockNum = false;
+              ans.textContent = e.target.id == "dot" ? "." : e.target.id;
+              lockNum = false;
             }
-        }
+          }
 
 
-
-        switch (e.target.id) {
-            case "AC":
-                {
-                    reset();
-
-                    break;
-                }
-            case "P":
-                {
-                    ans.textContent = !ans.textContent > 0 ? ans.textContent : ans.textContent * -1;
-                    break;
-                }
-            case "R":
-                {
-                    ans.textContent = strip(ans.textContent * 0.01);
-                    console.log(ans.textContent);
-                    break;
-                }
+          switch (e.target.id) {
+            case "AC": {
+              reset();
+              ans.textContent = 0;
+              ans.style.fontSize = defaultfontsize;
+              break;
+            }
+            case "P": {
+              ans.textContent =
+                !ans.textContent > 0 ? ans.textContent : ans.textContent * -1;
+              break;
+            }
+            case "R": {
+              ans.textContent = strip(ans.textContent * 0.01);
+              console.log(ans.textContent);
+              break;
+            }
             case "D":
             case "A":
             case "M":
-            case "S":
-                {
-                    lockNum = true;
-                    calAction = e.target.id;
+            case "S": {
+              lockNum = true;
+              calAction = e.target.id;
 
-                    if (checkCanPushNum() && preID !== calAction) {
-                        previousNum.push(parseFloat(ans.textContent));
-                        console.log(previousNum);
-                    }
-                    if (previousNum.length == 2) {
-                        tempTotal = previousNum.reduce((acc, cur) => {
-                            return mathOfCal[calAction](acc, cur);
-                        })
-                        previousNum = [];
-                        previousNum.push(tempTotal);
-                        ans.textContent = tempTotal.toString();
-                        console.log(previousNum);
-                    }
-                    break;
+              if (checkCanPushNum() && preID !== calAction) {
+                previousNum.push(parseFloat(ans.textContent));
+                console.log(previousNum);
+              }
+              if (previousNum.length == 2) {
+                tempTotal = previousNum.reduce((acc, cur) => {
+                  return mathOfCal[calAction](acc, cur);
+                });
+                previousNum = [];
+                previousNum.push(tempTotal);
+                ans.textContent = tempTotal.toString();
+                console.log(previousNum);
+              }
+              break;
+            }
+            case "E": {
+              lockNum = true;
+              if (previousNum.length != 0 && preID !== "E") {
+                console.log(previousNum);
+                if (previousNum.length >= 1) {
+                  lockNum = false;
+                  nowNum = parseFloat(ans.textContent);
+                  preNum = previousNum.shift();
+                  answer = mathOfCal[calAction](preNum, nowNum);
+                  previousNum.push(answer);
+                  ans.textContent = answer.toString();
+                  console.log(previousNum);
                 }
-            case "E":
-                {
-                    if (!isNaN(preID) && preID !== 'E') {
-                        console.log(previousNum);
-                        if (previousNum.length >= 1) {
-                            lockNum = false;
-                            nowNum = parseFloat(ans.textContent);
-                            preNum = previousNum.shift();
-                            answer = mathOfCal[calAction](preNum, nowNum);
-                            previousNum.push(answer);
-                            ans.textContent = answer.toString();
-                            console.log(previousNum);
-                        } else {
-                            previousNum.push(parseFloat(ans.textContent));
-                            console.log(previousNum);
-                        }
-                    }
-                    break;
-                }
+              } else {
+                previousNum = [];
+                previousNum.push(parseFloat(ans.textContent));
+                console.log(previousNum);
+              }
+              break;
+            }
+          }
+          preID = e.target.id;
+          console.log("switch end:" + preID);
+          updateFontSize();
         }
-        preID = e.target.id;
-        console.log('switch end:' + preID);
-
-    }
-
-    function checkCanPushNum() {
-        qans = !isNaN(preID) || preID == "P" || preID == "R";
-        console.log(qans);
-        return qans;
-    }
-</script>
-
+  </script>
 </html>
