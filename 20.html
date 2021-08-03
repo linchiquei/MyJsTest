@@ -56,7 +56,7 @@
         align-items: flex-end;
       }
 
-      #box{
+      #box {
         font-size: 64px;
         flex-grow: 1;
       }
@@ -136,161 +136,164 @@
     </div>
   </body>
   <script>
-        const ans = document.querySelector("#box");
-        ans.textContent = "0";
-        const defaultfontsize = window.getComputedStyle(ans, null).getPropertyValue('font-size');
-        const row = document.querySelector(".container");
-        const hidden = document.querySelector(".hidden");
+    const ans = document.querySelector("#box");
+    ans.textContent = "0";
+    const defaultfontsize = window
+      .getComputedStyle(ans, null)
+      .getPropertyValue("font-size");
+    const row = document.querySelector(".container");
+    const hidden = document.querySelector(".hidden");
 
-        row.addEventListener("click", (e) => {
-          docanNumculate(e);
-        });
+    row.addEventListener("click", (e) => {
+      docanNumculate(e);
+    });
 
-        let calAction = null;
-        let preID = null;
-        let previousNum = [];
-        let nowNum = 0;
-        let preNum = 0;
-        let answer = 0;
-        let lockNum = false;
-        let tempTotal = 0;
+    let calAction = null;
+    let preID = null;
+    let previousNum = [];
+    let nowNum = 0;
+    let preNum = 0;
+    let answer = 0;
+    let lockNum = false;
+    let tempTotal = 0;
 
-        let style;
-        let originFontSize;
-        const maxDisplayCharInLine = 6;
-        let fontsize;
+    let style;
+    let originFontSize;
+    const maxDisplayCharInLine = 6;
+    let fontsize;
 
-        function updateFontSize(){
-            originFontSize = parseFloat(defaultfontsize) ?? 64; 
-            fontSize = Math.min(originFontSize, originFontSize / (ans.textContent.length / maxDisplayCharInLine));
-            ans.style.fontSize = fontSize + "px";
-        }
+    function updateFontSize() {
+      originFontSize = parseFloat(defaultfontsize) ?? 64;
+      fontSize = Math.min(
+        originFontSize,
+        originFontSize / (ans.textContent.length / maxDisplayCharInLine)
+      );
+      ans.style.fontSize = fontSize + "px";
+    }
 
-        const mathOfCal = {
-          A: function (x, y) {
-            return x + y;
-          },
-          S: function (x, y) {
-            return x - y;
-          },
-          M: function (x, y) {
-            return strip(x * y);
-          },
-          D: function (x, y) {
-            return strip(x / y);
-          },
-        };
+    const mathOfCal = {
+      A: function (x, y) {
+        return strip(x + y);
+      },
+      S: function (x, y) {
+        return strip(x - y);
+      },
+      M: function (x, y) {
+        return strip(x * y);
+      },
+      D: function (x, y) {
+        return strip(x / y);
+      },
+    };
 
-        function strip(num, precision = 12) {
-          return parseFloat(num.toPrecision(12));
-        }
+    function strip(num, precision = 12) {
+      return parseFloat(num.toPrecision(12));
+    }
 
-        function checkHasDot() {
-          return /[\.]/.test(ans.textContent);
-        }
+    function checkHasDot() {
+      return /[\.]/.test(ans.textContent);
+    }
 
-        function cheackHasSameAction() {
-          return /['A','E','M','R','D']/.test(preID);
-        }
+    function cheackHasSameAction() {
+      return  preID !== "D" &&
+            preID !== "A" &&
+            preID !== "M" &&
+            preID !== "S" &&
+            preID !== "E" &&
+            preID !== "P" &&
+            preID !== "R";
+    }
 
-        function reset() {
-          calAction = null;
-          preID = null;
-          previousNum = [];
-          nowNum = 0;
-          preNum = 0;
-          answer = 0;
+    function reset() {
+      calAction = null;
+      preID = null;
+      previousNum = [];
+      nowNum = 0;
+      preNum = 0;
+      answer = 0;
+      lockNum = false;
+      tempTotal = 0;
+    }
+
+    function docanNumculate(e) {
+      if (!isNaN(e.target.id) || e.target.id == "dot") {
+        if (!lockNum) {
+          if (e.target.id == "dot") {
+            if (!checkHasDot()) ans.textContent += ".";
+          } else if (!isNaN(e.target.id)) {
+            if (ans.textContent.length == 1 && ans.textContent == "0") {
+              ans.textContent = "";
+            }
+            ans.textContent += e.target.id;
+          }
+        } else {
+          if (e.target.id == "dot") {
+            ans.textContent = "0.";
+          } else {
+            ans.textContent = e.target.id;
+          }
+
           lockNum = false;
-          tempTotal = 0;
         }
+      }
 
-        function checkCanPushNum() {
-          qans = !isNaN(preID) || preID == "P" || preID == "R";
-          console.log(qans);
-          return qans;
+      switch (e.target.id) {
+        case "AC": {
+          reset();
+          ans.textContent = 0;
+          ans.style.fontSize = defaultfontsize;
+          break;
         }
+        case "P": {
+          ans.textContent =
+            !ans.textContent > 0 ? ans.textContent : ans.textContent * -1;
+          break;
+        }
+        case "R": {
+          ans.textContent = strip(ans.textContent * 0.01);
+          console.log(ans.textContent);
+          break;
+        }
+        case "D":
+        case "A":
+        case "M":
+        case "S": {
+          lockNum = true;
+          calAction = e.target.id;
 
-        function docanNumculate(e) {
-          if (!isNaN(e.target.id) || e.target.id == "dot") {
-            if (!lockNum) {
-              if (e.target.id == "dot") {
-                if (!checkHasDot()) ans.textContent += ".";
-              } else if (!isNaN(e.target.id)) {
-                if (ans.textContent.length == 1 && ans.textContent == "0") {
-                  ans.textContent = "";
-                }
-                ans.textContent += e.target.id;
-              }
-            } else {
-              ans.textContent = e.target.id == "dot" ? "." : e.target.id;
-              lockNum = false;
+          if (cheackHasSameAction()) {
+            previousNum.push(parseFloat(ans.textContent));
+            console.log("ok" + previousNum);
+          }
+          if (previousNum.length == 2) {
+            tempTotal = previousNum.reduce((acc, cur) => {
+              return mathOfCal[calAction](acc, cur);
+            });
+            previousNum = [];
+            previousNum.push(tempTotal);
+            ans.textContent = tempTotal.toString();
+            console.log(previousNum);
+          }
+          break;
+        }
+        case "E": {
+          lockNum = true;
+          if (cheackHasSameAction()) {
+            nowNum = parseFloat(ans.textContent);
+            preNum = previousNum.shift();
+            if (preNum) {
+              answer = mathOfCal[calAction](preNum, nowNum);
+              ans.textContent = answer.toString();
+              previousNum = [];
+              previousNum.push(answer);
+              console.log(previousNum);
             }
           }
-
-
-          switch (e.target.id) {
-            case "AC": {
-              reset();
-              ans.textContent = 0;
-              ans.style.fontSize = defaultfontsize;
-              break;
-            }
-            case "P": {
-              ans.textContent =
-                !ans.textContent > 0 ? ans.textContent : ans.textContent * -1;
-              break;
-            }
-            case "R": {
-              ans.textContent = strip(ans.textContent * 0.01);
-              console.log(ans.textContent);
-              break;
-            }
-            case "D":
-            case "A":
-            case "M":
-            case "S": {
-              lockNum = true;
-              calAction = e.target.id;
-
-              if (checkCanPushNum() && preID !== calAction) {
-                previousNum.push(parseFloat(ans.textContent));
-                console.log(previousNum);
-              }
-              if (previousNum.length == 2) {
-                tempTotal = previousNum.reduce((acc, cur) => {
-                  return mathOfCal[calAction](acc, cur);
-                });
-                previousNum = [];
-                previousNum.push(tempTotal);
-                ans.textContent = tempTotal.toString();
-                console.log(previousNum);
-              }
-              break;
-            }
-            case "E": {
-              lockNum = true;
-              if (previousNum.length != 0 && preID !== "E") {
-                console.log(previousNum);
-                if (previousNum.length >= 1) {
-                  lockNum = false;
-                  nowNum = parseFloat(ans.textContent);
-                  preNum = previousNum.shift();
-                  answer = mathOfCal[calAction](preNum, nowNum);
-                  previousNum.push(answer);
-                  ans.textContent = answer.toString();
-                  console.log(previousNum);
-                }
-              } else {
-                previousNum = [];
-                previousNum.push(parseFloat(ans.textContent));
-                console.log(previousNum);
-              }
-              break;
-            }
-          }
-          preID = e.target.id;
-          console.log("switch end:" + preID);
-          updateFontSize();
+          break;
         }
+      }
+      preID = e.target.id;
+      updateFontSize();
+    }
   </script>
 </html>
