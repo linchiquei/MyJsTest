@@ -27,7 +27,7 @@ Hello.prototype.attack = function(){
 //     greet: function(){
 //         console.log('greet')
 //     }
-// } //不要這麼做
+// } //假如不是第一次宣告方法,不要這麼做會直接複寫
 
 
 

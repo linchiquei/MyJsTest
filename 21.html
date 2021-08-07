@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Raleway:wght@100&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        font-family: "Raleway", sans-serif;
+      }
+      div {
+        text-align: center;
+        min-width: 375px;
+        background-color: #f0f0f0;
+      }
+
+      h1 {
+        font-size: 39px;
+        line-height: 100vh;
+        font-weight: 100;
+      }
+
+      @media screen and (min-width: 768px) {
+        h1 {
+          font-size: 76px;
+        }
+      }
+
+      @media screen and (min-width: 1200px) {
+        h1 {
+          font-size: 128px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <h1 id="time">02:00</h1>
+    </div>
+  </body>
+  <script>
+    document.addEventListener("DOMContentLoaded", OnLoadFinish);
+
+    const display = document.querySelector("#time");
+
+    const getTexts = function () {
+      console.log(this);
+      return `${this.days} : ${this.hours} : ${this.minutes} : ${this.sec}`;
+    };
+
+    function OnLoadFinish() {
+      let timestamp = 0;
+      let days = 0;
+      let hours = 0;
+      let minutes = 0;
+      let sec = 0;
+      let d = 0;
+      let h = 0;
+      let m = 0;
+      let s = 0;
+
+      initTimer();
+
+      window.addEventListener("keydown", (e) => {
+        
+        switch (e.key) {
+          case "Enter":
+            console.log("A");
+            break;
+          case " ":
+            console.log("A");
+            break;
+          case "ArrowLeft":
+            console.log("A");
+            break;
+          case "ArrowRight":
+            console.log("A");
+            break;
+          case "ArrowUp":
+            console.log("A");
+            break;
+        }
+      });
+    }
+
+    function initTimer(times = 2) {
+      timestamp = times * 60 * 1000;
+      date = new Date(timestamp);
+
+      d = date.getDate();
+      h = date.getHours();
+      m = date.getMinutes();
+      s = date.getSeconds();
+
+      days = d > 10 ? d : "0" + d;
+      hours = h > 10 ? h : "0" + h;
+      minutes = m > 10 ? m : "0" + m;
+      sec = s > 10 ? s : "0" + s;
+      display.textContent = getTexts();
+    }
+
+    function updateTimerState(state) {
+      if (state.typeof === Boolean) {
+        console.log("run or not");
+      }
+    }
+
+    function countDown(times) {
+      const id = setInterval(() => {
+        display.textContent = "";
+      }, 1000);
+    }
+  </script>
+</html>
