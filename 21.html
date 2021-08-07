@@ -1,123 +1,232 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Raleway:wght@100&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100&display=swap" rel="stylesheet" />
     <style>
-      * {
-        margin: 0;
-        padding: 0;
-        font-family: "Raleway", sans-serif;
-      }
-      div {
-        text-align: center;
-        min-width: 375px;
-        background-color: #f0f0f0;
-      }
-
-      h1 {
-        font-size: 39px;
-        line-height: 100vh;
-        font-weight: 100;
-      }
-
-      @media screen and (min-width: 768px) {
-        h1 {
-          font-size: 76px;
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: "Raleway", sans-serif;
         }
-      }
-
-      @media screen and (min-width: 1200px) {
-        h1 {
-          font-size: 128px;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <div>
-      <h1 id="time">02:00</h1>
-    </div>
-  </body>
-  <script>
-    document.addEventListener("DOMContentLoaded", OnLoadFinish);
-
-    const display = document.querySelector("#time");
-
-    const getTexts = function () {
-      console.log(this);
-      return `${this.days} : ${this.hours} : ${this.minutes} : ${this.sec}`;
-    };
-
-    function OnLoadFinish() {
-      let timestamp = 0;
-      let days = 0;
-      let hours = 0;
-      let minutes = 0;
-      let sec = 0;
-      let d = 0;
-      let h = 0;
-      let m = 0;
-      let s = 0;
-
-      initTimer();
-
-      window.addEventListener("keydown", (e) => {
         
-        switch (e.key) {
-          case "Enter":
-            console.log("A");
-            break;
-          case " ":
-            console.log("A");
-            break;
-          case "ArrowLeft":
-            console.log("A");
-            break;
-          case "ArrowRight":
-            console.log("A");
-            break;
-          case "ArrowUp":
-            console.log("A");
-            break;
+        .text {
+            background-color: #f0f0f0;
+            width: 100%;
+            height: 100%;
+            text-align: center;
         }
-      });
-    }
+        
+        h1 {
+            font-size: 39px;
+            line-height: 100vh;
+            font-weight: 100;
+            color: black;
+            position: relative;
+        }
+        
+        .progress {
+            background: linear-gradient(to left, #f2709c, #e467f5);
+            position: fixed;
+            z-index: 0;
+            width: 0;
+            height: 100%;
+        }
+        
+        @media screen and (min-width: 768px) {
+            h1 {
+                font-size: 76px;
+            }
+        }
+        
+        @media screen and (min-width: 1200px) {
+            h1 {
+                font-size: 128px;
+            }
+        }
+    </style>
+</head>
 
-    function initTimer(times = 2) {
-      timestamp = times * 60 * 1000;
-      date = new Date(timestamp);
+<body>
+    <div class="progress"></div>
+    <div class="text">
 
-      d = date.getDate();
-      h = date.getHours();
-      m = date.getMinutes();
-      s = date.getSeconds();
+        <h1>02:00</h1>
+        <audio src="https://www.freesoundslibrary.com/wp-content/uploads/2018/01/ding-sound-effect.mp3"></audio>
+    </div>
+</body>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const display = document.querySelector("h1");
+        const sound = document.querySelector("audio");
+        const progress = document.querySelector(".progress");
+        var times = 0;
+        var seconds = 0;
+        var upgradeTime = 0;
+        var isRun = false;
+        var isTimerStart = false;
+        var countdownTimer = null;
+        var days = 0;
+        var hoursLeft = 0;
+        var hours = 0;
+        var minutesLeft = 0;
+        var minutes = 0;
+        var remainingSeconds = 0;
+        var from = 0;
+        var percentage = 0;
 
-      days = d > 10 ? d : "0" + d;
-      hours = h > 10 ? h : "0" + h;
-      minutes = m > 10 ? m : "0" + m;
-      sec = s > 10 ? s : "0" + s;
-      display.textContent = getTexts();
-    }
+        window.addEventListener("keydown", (e) => {
+            if (e.key !== " " && (!isNaN(e.key) || e.key == ".")) {
+                times += e.key;
+                //console.log("input" + times);
+            }
 
-    function updateTimerState(state) {
-      if (state.typeof === Boolean) {
-        console.log("run or not");
-      }
-    }
+            switch (e.key) {
+                case "Enter":
+                    isTimerStart = !isTimerStart;
 
-    function countDown(times) {
-      const id = setInterval(() => {
-        display.textContent = "";
-      }, 1000);
-    }
-  </script>
+                    if (!isTimerStart) {
+                        //console.log(parseInt(times));
+                        if (parseInt(times) > 0) {
+                            isTimerStart = true;
+                            isRun = true;
+                            display.style.color = "#000000";
+                            times = parseInt(times) == 0 ? 2 : times;
+                            calSec();
+                            //console.log("is start" + times);
+                            clearInterval(countdownTimer);
+                            countdownTimer = setInterval(timer, 1000);
+                            //console.log("is not start times not zero");
+                        } else {
+                            isRun = false;
+                            seconds = 0;
+                            times = "0";
+                            updatetext(seconds);
+                            display.style.color = "#000000";
+                            clearInterval(countdownTimer);
+                            //console.log("is not start" + times);
+                        }
+                    } else {
+                        //console.log("is start" + parseInt(times));
+                        isRun = true;
+                        display.style.color = "#000000";
+                        times = parseInt(times) == 0 ? 2 : times;
+                        calSec();
+                        //console.log("is start" + times);
+                        clearInterval(countdownTimer);
+                        countdownTimer = setInterval(timer, 1000);
+                    }
+
+                    break;
+                case " ":
+                    if (isTimerStart) {
+                        isRun = !isRun;
+                        //console.log(isRun);
+                        if (!isRun) display.style.color = "#d3d3d3";
+                        else {
+                            display.style.color = "#000000";
+                        }
+                    }
+                    break;
+                case "ArrowLeft":
+                    if (isTimerStart) {
+                        if (seconds + 5 > upgradeTime) {
+                            seconds = upgradeTime;
+                        } else {
+                            seconds = seconds + 5;
+                        }
+                        if (isRun == false) updatetext(seconds);
+                    }
+                    break;
+                case "ArrowRight":
+                    if (isTimerStart) {
+                        seconds = seconds < 5 ? 0 : seconds - 5;
+                        if (isRun == false) updatetext(seconds);
+                    }
+                    break;
+                case "ArrowUp":
+                    if (isTimerStart) {
+                        seconds = upgradeTime;
+                        if (isRun == false) updatetext(seconds);
+                    }
+                    break;
+            }
+            updateBackGround();
+        });
+
+        function calSec() {
+            var sec = parseInt((times % 1) * 10);
+            //console.log("sec" + sec);
+            var min = parseInt(times);
+            //console.log("mun" + min);
+            //console.log(min * 60 + sec * 6);
+            upgradeTime = min * 60 + sec * 6;
+            seconds = upgradeTime;
+            times = "0";
+            console.log("calSec");
+        }
+
+        function updatetext(seconds) {
+            // date = new Date(seconds * 1000);
+            // console.log(date + Date.now());
+
+            days = Math.floor(seconds / 24 / 60 / 60);
+            hoursLeft = Math.floor(seconds - days * 86400);
+            hours = Math.floor(hoursLeft / 3600);
+            minutesLeft = Math.floor(hoursLeft - hours * 3600);
+            minutes = Math.floor(minutesLeft / 60);
+            remainingSeconds = seconds % 60;
+
+            //console.log(`${days} ${hours} ${minutes} ${remainingSeconds}`);
+
+            display.textContent =
+                show(days) + show(hours) + pad(minutes) + ":" + pad(remainingSeconds);
+        }
+
+        function pad(n) {
+            return n < 10 ? "0" + n : n;
+        }
+
+        function show(t) {
+            return t > 0 ? pad(t) + ":" : "";
+        }
+
+        function timer() {
+            if (isRun == false) return;
+
+            updatetext(seconds);
+            //console.log(`${seconds} `);
+
+            if (seconds == 0) {
+                //console.log("B" + seconds);
+                sound.play();
+                isTimerStart = false;
+                isRun = false;
+                times = "0";
+                updatetext(seconds);
+                display.style.color = "#000000";
+                clearInterval(countdownTimer);
+                //console.log("is not start" + times);
+            } else {
+                seconds--;
+                updateBackGround();
+                //console.log("S" + seconds);
+            }
+        }
+
+        function updateBackGround() {
+            from = upgradeTime - seconds;
+            percentage = Math.round((from / upgradeTime) * 100);
+            console.log(percentage);
+            progress.style.width = percentage + "%";
+        }
+    });
+</script>
+
 </html>
