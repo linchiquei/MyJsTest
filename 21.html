@@ -83,8 +83,9 @@
 
         window.addEventListener("keydown", (e) => {
             if (e.key !== " " && (!isNaN(e.key) || e.key == ".")) {
+                if (e.key == '.' && times.includes('.')) return;
                 times += e.key;
-                //console.log("input" + times);
+                console.log("input" + times);
             }
 
             switch (e.key) {
@@ -92,17 +93,17 @@
                     isTimerStart = !isTimerStart;
 
                     if (!isTimerStart) {
-                        //console.log(parseInt(times));
+                        console.log(parseInt(times));
                         if (parseInt(times) > 0) {
                             isTimerStart = true;
                             isRun = true;
                             display.style.color = "#000000";
                             times = parseInt(times) == 0 ? 2 : times;
                             calSec();
-                            //console.log("is start" + times);
+                            console.log("is start" + times);
                             clearInterval(countdownTimer);
                             countdownTimer = setInterval(timer, 1000);
-                            //console.log("is not start times not zero");
+                            console.log("is not start times not zero");
                         } else {
                             isRun = false;
                             seconds = 0;
@@ -110,15 +111,15 @@
                             updatetext(seconds);
                             display.style.color = "#000000";
                             clearInterval(countdownTimer);
-                            //console.log("is not start" + times);
+                            console.log("is not start" + times);
                         }
                     } else {
-                        //console.log("is start" + parseInt(times));
+                        console.log("is start" + parseInt(times));
                         isRun = true;
                         display.style.color = "#000000";
                         times = parseInt(times) == 0 ? 2 : times;
                         calSec();
-                        //console.log("is start" + times);
+                        console.log("is start" + times);
                         clearInterval(countdownTimer);
                         countdownTimer = setInterval(timer, 1000);
                     }
@@ -127,7 +128,7 @@
                 case " ":
                     if (isTimerStart) {
                         isRun = !isRun;
-                        //console.log(isRun);
+                        console.log(isRun);
                         if (!isRun) display.style.color = "#d3d3d3";
                         else {
                             display.style.color = "#000000";
@@ -223,7 +224,7 @@
         function updateBackGround() {
             from = upgradeTime - seconds;
             percentage = Math.round((from / upgradeTime) * 100);
-            console.log(percentage);
+            //console.log(percentage);
             progress.style.width = percentage + "%";
         }
     });
